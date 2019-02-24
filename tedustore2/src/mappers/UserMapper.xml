@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+  
+<mapper namespace="cn.tedu.store.mapper.UserMapper">
+<!-- 添加一个用户信息到数据库中 void insert(User user); -->
+<insert id="insert" parameterType="cn.tedu.store.bean.User">
+
+insert into t_user(username,password,email,phone,
+			image,gender,
+			created_user ,
+			created_time ,
+			modified_user ,
+			modified_time ,
+			role	
+)values(
+#{username},#{password},#{email},#{phone},
+			#{image},#{gender},
+			#{createdUser},
+			#{createdTime},
+			#{modifiedUser},
+			#{modifiedTime},
+			#{role}	
+)
+</insert><!-- 会自动的调用user.getXxx()方法传入 -->
+
+
+
+	<!-- User getUserByUsername(String username); -->
+	<select id="getUserByUsername"
+					 resultType="cn.tedu.store.bean.User">
+		select
+			id,username,password,email,phone,
+			image,gender,created_user as createdUser,
+			created_time as createdTime,
+			modified_user as modifiedUser,
+			modified_time as modifiedTime,
+			role	
+		from t_user
+		where username=#{username}
+	</select>
+	<!--  	User getUserByEmail(String username) ;  -->
+	<select id="getUserByEmail" resultType="cn.tedu.store.bean.User">
+		select id,username,password,email,phone,image,gender,created_user as createdUser,created_time as createdTime,modified_user as modifiedUser,modified_time as modifiedTime,role 
+		from t_user 
+		where email=#{email}
+	</select>
+	
+	<!--  Integer getUserNum() ;  -->
+	<select id="getUserNum" resultType="java.lang.Integer">
+		select count(*) from t_user
+	</select>
+	
+	
+	<!-- Integer getCountByUsername(String username); -->
+	<select id="getCountByUsername" resultType="java.lang.Integer">
+		select count(*) from t_user where username=#{username}
+	</select>
+	<!-- Integer getCountByEmail(String email); -->
+	<select id="getCountByEmail" resultType="java.lang.Integer">
+		select count(*) from t_user where email=#{email}
+	</select>
+	<!-- Integer getCountByPhone(String phone); -->
+	<select id="getCountByPhone" resultType="java.lang.Integer">
+		select count(*) from t_user where phone=#{phone}
+	</select>
+	
+	
+</mapper>
+
+
+
+

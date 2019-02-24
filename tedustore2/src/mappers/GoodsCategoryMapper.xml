@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+  
+<mapper namespace="cn.tedu.store.mapper.GoodsCategoryMapper">
+		<!-- List<GoodsCategory> getGoodsCategoryByParentId(
+			@Param("parentId")Integer parentId,
+			@Param("offset")Integer offset,
+			@Param("count")Integer count); -->
+			
+			<!--  select查询结果是一条 的话，直接返回一个结果对象；
+			查询记录结果是多条，会对应多个对象，接着MyBatis框架将它们存入到List中返回 -->
+			
+			<select id="getGoodsCategoryByParentId" 
+			resultType="cn.tedu.store.bean.GoodsCategory">
+			select
+					id,parent_id as parentId,
+					name,status,sort_order as sortOrder,
+					is_parent as isParent,
+					created_user as createdUser,
+					created_time as createdTime,
+					modified_user as modifiedUser,
+					modified_time as modifiedTime
+			from
+					t_goods_category
+			where
+					parent_id=#{parentId}
+			<if test="offset!=null">
+			limit #{offset},#{count}
+			</if>
+			</select>
+			
+			<!-- 根据类别id，查询出某个类别的详细信息 -->
+			<!-- GoodsCategory getGoodsCategoryById(Integer id); -->
+			<select id="getGoodsCategoryById"
+					 resultType="cn.tedu.store.bean.GoodsCategory">
+			select
+					id,parent_id as parentId,
+					name,status,sort_order as sortOrder,
+					is_parent as isParent,
+					created_user as createdUser,
+					created_time as createdTime,
+					modified_user as modifiedUser,
+					modified_time as modifiedTime
+			from
+					t_goods_category
+			where
+					id=#{id}
+			</select>
+			<!-- List<Goods> getGoodsByCategoryId(
+			Integer categoryId,
+			Integer offset,
+			Integer count
+			); -->
+			<select id="getGoodsByCategoryId"
+					 resultType="cn.tedu.store.bean.GoodsCategory">
+			select
+					id,parent_id as parentId,
+					name,status,sort_order as sortOrder,
+					is_parent as isParent,
+					created_user as createdUser,
+					created_time as createdTime,
+					modified_user as modifiedUser,
+					modified_time as modifiedTime
+			from
+					t_goods_category
+			where
+					id=#{categoryId}
+			</select>
+</mapper>
+
+
+
+

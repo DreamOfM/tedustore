@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+  
+<mapper namespace="cn.tedu.store.mapper.CartMapper">
+<!-- 
+Goods getGoodsById(Integer id);
+	List<Goods> getGoodsByCategoryId(
+			@Param("categoryId")Integer categoryId,
+			@Param("offset")Integer offset,
+			@Param("count")Integer count);
+
+ -->
+ 
+ <!-- select查询结果时一条的话，直接返回一个结果对象，
+ 如果是多条，会对应多个对象，接着mybatis框架将他们存入到list中返回 -->
+  <select id="getCartsByUserId" resultType="cn.tedu.store.bean.Cart">
+ select 
+ id,goodsid,userid,count  from t_cart
+ where
+ userid=#{userid}
+ 
+ </select>
+<!--  getCartsByid -->
+ <select id="getCartsByid" resultType="cn.tedu.store.bean.Cart">
+ select 
+ id,goodsid,userid,count  from t_cart
+ where
+ id=#{id}
+ 
+ </select>
+
+
+ <!-- 插入数据 -->
+	<!-- void insert(Cart cart); -->
+	<insert id="addCart" parameterType="cn.tedu.store.bean.Cart">
+		insert into t_cart(
+		id,goodsid,userid,count
+		)values(
+		#{id},#{goodsid},#{userid},#{count}
+		)
+	</insert>
+ 
+ 
+ 
+ <delete id="deleteCart">
+ delete from t_cart where id=#{cid}
+ 
+ </delete>
+ <!-- 根据多个id删除购物车商品 -->
+	<!-- void deleteByBatch(Integer[] ids); -->
+	<delete id="deleteByItems">
+		delete from t_cart
+		where id 
+		in 
+		<foreach collection="array" item="id" open="(" separator="," close=")">
+			${id}
+		</foreach>
+	</delete>
+	
+ 
+ 
+ <!--
+ <select id="getGoodsById" resultType="cn.tedu.store.bean.Goods">
+ 
+ select 
+ id,parent_id as parentId,
+ name,status,sort_order as sortOrder,
+ created_user as createdUser,created_time as createdTime,
+    modified_user as modifiedUser,modified_time as modifiedTime
+ from 
+ t_goods_category
+ where
+ id=#{id}
+ 
+ 
+ </select> -->
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
